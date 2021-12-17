@@ -38,3 +38,21 @@ with open('stats.csv', 'w', encoding="utf-8", newline='') as file:
     writer.writerow(columns)
     for row in rows:
         writer.writerow(row)
+
+url = "https://www.nba.com/stats/teams/traditional/?sort=W_PCT&dir=-1"
+browser.get(url)
+time.sleep(2)
+soup = BeautifulSoup(browser.page_source, "html.parser")
+headers = soup.select(".nba-stat-table__overflow table thead tr:nth-child(1)")
+rows_soup = soup.select(".nba-stat-table__overflow table tbody tr")
+columns = ['ID']
+columns.extend([col.get_text(strip=True) for col in headers[0] if col.get_text(strip=True) != ""])
+rows = []
+for i in range(len(rows_soup)):
+    rows.append([x.get_text(strip=True) for x in rows_soup[i] if x.get_text(strip=True) != ""])
+
+with open('team_stats.csv', 'w', encoding="utf-8", newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(columns)
+    for row in rows:
+        writer.writerow(row)
