@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.support.ui import Select
 import time
 import csv
 from bs4 import BeautifulSoup
@@ -33,7 +32,7 @@ for i in range(len(rows_soup)):
     rows.append([x.get_text(strip=True) for x in rows_soup[i] if x.get_text(strip=True) != ""])
     # print([x.get_text(strip=True) for x in rows[i] if x.get_text(strip=True) != ""])
 
-with open('stats.csv', 'w', encoding="utf-8", newline='') as file:
+with open('player_stats.csv', 'w', encoding="utf-8", newline='') as file:
     writer = csv.writer(file)
     writer.writerow(columns)
     for row in rows:
